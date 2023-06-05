@@ -1,6 +1,6 @@
 # Dataset
 
-The dataset is one of the most popular datasets in [food computing](http://123.57.42.89/FoodComputing__Dataset.html), so called Yummly-66K.
+This dataset is further processed from one of the most popular datasets in [food computing](http://123.57.42.89/FoodComputing__Dataset.html), so called Yummly-66K.
 
 ## Dataset description
 
@@ -9,6 +9,12 @@ This dataset consists of 66,615 recipe items from Yummly, namely Yummly_66K. Eac
 ## Download address
 
 <https://github.com/minweiqing/You-Are-What-You-Eat-Exploring-Rich-Recipe-Information-for-Cross-Region-Food-Analysis>
+
+## Processed Dataset
+
+This dataset can be downloaded here at [huggingface hub](https://huggingface.co/datasets/ziq/ingredient_to_sugar_level)
+
+See how I processed the dataset: [process.ipynb](./process.ipynb)
 
 ## Papers cited
 
