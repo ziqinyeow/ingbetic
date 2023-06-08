@@ -5,6 +5,7 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -22,6 +23,10 @@ const context = createContext(defaultValue);
 
 export function DataProvider({ children }: { children?: React.ReactNode }) {
   const [prompt, setPrompt] = useState("");
+
+  // useEffect(() => {
+  //   (async () => {})();
+  // }, []);
 
   const value = { prompt, setPrompt };
 

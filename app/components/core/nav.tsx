@@ -19,15 +19,13 @@ const Nav: FC<NavProps> = () => {
       <div className="flex items-center gap-2">
         <Button
           className={clsx([
-            pathname === "/language" && "text-black bg-gray-100",
+            pathname === "/learn" && "!text-black !bg-gray-100",
           ])}
           onClick={() => {
-            router.push("/language");
+            router.push("/learn");
           }}
         >
-          <span>
-            <BrainCircuit className="w-4 h-4" />
-          </span>
+          <BrainCircuit className="w-4 h-4 text-inherit" />
           <span className="hidden md:block">Learn</span>
         </Button>
       </div>

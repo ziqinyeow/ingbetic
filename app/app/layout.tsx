@@ -18,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx([mono.className, ""])}>
+      <body
+        suppressHydrationWarning={true}
+        className={clsx([mono.className, ""])}
+      >
         <div className="flex">
           <div className="z-10 w-full">
             <Nav />
