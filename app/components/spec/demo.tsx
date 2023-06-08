@@ -3,13 +3,12 @@
 import clsx from "clsx";
 import { TerminalSquare } from "lucide-react";
 import "reactflow/dist/style.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactFlow from "reactflow";
 import useData from "@/context/data";
 import { isValidURL } from "@/lib/utils";
-// import { AutoTokenizer } from "@/lib/tokenizer";
 import { initialEdges, initialNodes, nodeTypes } from "@/lib/node";
-import { load_session } from "@/lib/model/inference";
+import { Tokenizer, inference, load_session } from "@/lib/model/inference";
 
 const width = "w-[350px] sm:w-[400px] lg:w-[600px]";
 
@@ -18,21 +17,21 @@ export default function Demo() {
   const [edges, setEdges] = useState(initialEdges);
   const [valid, setValid] = useState(0);
   const [session, setSession] = useState<any>();
-
   const { prompt, setPrompt } = useData();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     // setSession();
-  //     // const sess = await load_session();
-  //     // sess.run()
-  //     tokenize();
-  //   })();
-  // }, []);
-  // console.log(session);
+  const tokenizer = useMemo(() => {
+    return Tokenizer();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const _session = await load_session();
+      setSession(_session);
+      // const result = await inference("what are you doing", tokenizer, session)
+    })();
+  }, []);
 
   const generate = async (e: React.FormEvent<HTMLFormElement>) => {
-    "use client";
     e.preventDefault();
     if (prompt?.length === 0) {
       return;

@@ -1,6 +1,5 @@
 import Demo from "@/components/spec/demo";
-import { DataProvider } from "@/context/data";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function Language() {
   return (
@@ -9,7 +8,6 @@ export default function Language() {
         <div className="flex mb-5 md:mb-0 text-center flex-col px-5 items-center justify-center w-full min-h-[16rem]">
           <h2>Check if the food 🍬</h2>
           <p className="!text-[2.25rem] flex items-center gap-5 font-bold">
-            {/* <span>🤗</span> */}
             <span className="gradient from-purple-500 via-orange-600 to-pink-500">
               is good for diebetic patient
             </span>
@@ -20,9 +18,7 @@ export default function Language() {
           </h4>
         </div>
       </div>
-      <DataProvider>
-        <Demo />
-      </DataProvider>
+      <Demo />
     </main>
   );
 }

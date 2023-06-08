@@ -1,5 +1,7 @@
 "use client";
 
+import { Tokenizer, load_session } from "@/lib/model/inference";
+import { BertTokenizer } from "@xenova/transformers";
 import {
   Dispatch,
   SetStateAction,
@@ -23,9 +25,13 @@ const context = createContext(defaultValue);
 
 export function DataProvider({ children }: { children?: React.ReactNode }) {
   const [prompt, setPrompt] = useState("");
+  // const [session, setSession] = useState<any>(null);
 
   // useEffect(() => {
-  //   (async () => {})();
+  //   (async () => {
+  //     const _session = await load_session();
+  //     setSession(_session);
+  //   })();
   // }, []);
 
   const value = { prompt, setPrompt };

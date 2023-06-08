@@ -1,3 +1,8 @@
+import tokenizer from "../../public/tokenizer/tokenizer.json";
+import tokenizer_config from "../../public/tokenizer/tokenizer_config.json";
+
+import { BertTokenizer } from "@xenova/transformers";
+
 import * as ort from "onnxruntime-web";
 // import { AutoTokenizer } from "../tokenizer";
 ort.env.wasm.numThreads = 3;
@@ -11,12 +16,36 @@ export async function load_session(model = "model/model-int8.onnx") {
   return session;
 }
 
-// export async function tokenize() {
-//   const text =
-//     "1 pound ground beef, 1 tablespoon dehydrated onion, 1 teaspoon salt, 1/2 teaspoon pepper, 1 teaspoon garlic powder, 1/4 teaspoon oregano, 1 cup uncooked penne pasta, 1 cup water, 1 (15-ounce) can fire-roasted diced tomatoes, 1/4 cup Parmesan cheese, 1/2 cup shredded mozzarella cheese, 4-6 fresh basil leaves, torn";
-//   const tokenizer = AutoTokenizer.from_pretrained("/model/tokenizer.json");
-//   console.log(tokenizer);
-//   //   const output = tokenizer.encode(text);
-//   //   console.log(tokenizer);
-//   //   input_ids = new ort.Tensor("int64", BigInt64Array.from(input_ids), [1, 10]);
-// }
+export function Tokenizer() {
+  try {
+    const bert_tokenizer = new BertTokenizer(tokenizer, tokenizer_config);
+    return bert_tokenizer;
+  } catch (error) {
+    console.log(error);
+    return () => {};
+  }
+}
+
+export async function inference(text: string, tokenizer: any, session: any) {
+  const { input_ids, attention_mask } = tokenizer(text, {
+    padding: true,
+    truncation: true,
+    max_length: 512,
+  });
+  const input = {
+    input_ids,
+    attention_mask,
+  };
+  const output = await session.run(input);
+
+  // @ts-ignore
+  const logits: Float32Array = output?.["logits"]?.data;
+
+  const result = Array.from(logits)?.[0] * 13.3627190349059 + 10.85810766787474;
+}
+
+// const { input_ids, attention_mask } = bert_tokenizer("1 amazing item", {
+//   padding: true,
+//   truncation: true,
+//   max_length: 512,
+// });
