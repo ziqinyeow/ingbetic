@@ -6,12 +6,10 @@ import "reactflow/dist/style.css";
 import React, { useEffect, useState } from "react";
 import ReactFlow from "reactflow";
 import useData from "@/context/data";
-import CenterNode from "./node/center";
 import { isValidURL } from "@/lib/utils";
 // import { AutoTokenizer } from "@/lib/tokenizer";
-import { AutoTokenizer } from "@xenova/transformers";
 import { initialEdges, initialNodes, nodeTypes } from "@/lib/node";
-import load_session, { tokenize } from "@/lib/model/inference";
+import { load_session } from "@/lib/model/inference";
 
 const width = "w-[350px] sm:w-[400px] lg:w-[600px]";
 
