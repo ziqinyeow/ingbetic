@@ -181,6 +181,7 @@ export default function Demo() {
             <TerminalSquare className="absolute inset-y-0 left-0 w-5 my-3 ml-3 text-gray-400" />
             <input
               type="text"
+              disabled={!session || !tokenizer}
               value={prompt}
               onChange={(e) => {
                 const { value } = e.target;
@@ -189,10 +190,11 @@ export default function Demo() {
               }}
               placeholder="https://www.myrecipes.com/recipe/apple-galette"
               className={clsx([
-                "block w-full p-3 pl-10 pr-12 text-sm border-gray-200 bg-white border-2 rounded-md shadow-lg peer focus:border-black focus:outline-none focus:ring-0",
+                "block w-full p-3 pl-10 pr-12 transition-all text-sm border-gray-200 bg-white border-2 rounded-md shadow-lg peer focus:border-black focus:outline-none focus:ring-0",
                 valid === 0 && "!border-black",
                 valid === -1 && "!border-red-200",
                 valid === 1 && "!border-green-200",
+                (!session || !tokenizer) && "opacity-30",
               ])}
             />
             <button
