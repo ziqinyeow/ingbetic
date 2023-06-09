@@ -2,11 +2,13 @@
 
 ## Dataset
 
-This dataset can be downloaded here at [huggingface hub](https://huggingface.co/datasets/ziq/ingredient_to_sugar_level)
+This dataset is being normalized and can be downloaded here at [huggingface hub](https://huggingface.co/datasets/ziq/ingredient_to_sugar_level).
 
-See how I processed the dataset: [process.ipynb](./data/process.ipynb)
+See how I processed the dataset: [process.ipynb](./data/process.ipynb).
 
 See [data/README.md](./data/) for more details.
+
+Note: The result should `* 13.3627190349059 + 10.85810766787474` to obtain the actual sugar level
 
 ## Model
 
