@@ -1,22 +1,29 @@
 "use client";
 
 import clsx from "clsx";
-import { TerminalSquare } from "lucide-react";
+import { TerminalSquare, X } from "lucide-react";
 import "reactflow/dist/style.css";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactFlow from "reactflow";
 import useData from "@/context/data";
 import { isValidURL } from "@/lib/utils";
 import { initialEdges, initialNodes, nodeTypes } from "@/lib/node";
 import { Tokenizer, inference, load_session } from "@/lib/model/inference";
+import Loader from "../ui/loader";
 
 const width = "w-[350px] sm:w-[400px] lg:w-[600px]";
 
 export default function Demo() {
+  const reactflowref = useRef(null);
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [valid, setValid] = useState(0);
   const [session, setSession] = useState<any>();
+  const [ingredients, setIngredients] = useState({
+    ok: false,
+    list: [],
+    text: "",
+  });
   const { prompt, setPrompt } = useData();
 
   const tokenizer = useMemo(() => {
@@ -27,7 +34,6 @@ export default function Demo() {
     (async () => {
       const _session = await load_session();
       setSession(_session);
-      // const result = await inference("what are you doing", tokenizer, session)
     })();
   }, []);
 
@@ -42,6 +48,9 @@ export default function Demo() {
       return;
     }
 
+    // generate
+    setPrompt("");
+
     setNodes((_nodes) =>
       _nodes?.map((n) => {
         if (n?.id === "0") {
@@ -52,27 +61,110 @@ export default function Demo() {
               children: prompt.replace("https://", "").replace("http://", ""), //.split("/").slice(0, 4).join("/"),
             },
           };
-        }
-        return { ...n };
-      })
-    );
-
-    setNodes((_nodes) =>
-      _nodes?.map((n) => {
-        if (n?.id === "4") {
+        } else {
           return {
             ...n,
             data: {
               ...n?.data,
-              children: "Good",
+              children: (
+                <>
+                  <Loader />
+                </>
+              ),
+            },
+          };
+        }
+      })
+    );
+
+    const response = await fetch("/api", {
+      method: "POST",
+      body: JSON.stringify({
+        url: prompt,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const ingredients = await response.json();
+
+    // no ingredients found
+    if (!ingredients.text) {
+      setNodes((_nodes) =>
+        _nodes?.map((n) => {
+          if (n?.id === "1") {
+            return {
+              ...n,
+              data: {
+                ...n?.data,
+                children: "No ingredients found",
+              },
+            };
+          } else if (["2", "3", "4"].includes(n?.id)) {
+            return {
+              ...n,
+              data: {
+                ...n?.data,
+                children: <X className="w-4 h-4 text-gray-300" />,
+              },
+            };
+          }
+          return { ...n };
+        })
+      );
+      return;
+    }
+
+    setIngredients(ingredients);
+
+    setNodes((_nodes) =>
+      _nodes?.map((n) => {
+        if (n?.id === "1") {
+          return {
+            ...n,
+            data: {
+              ...n?.data,
+              children: ingredients?.text ?? "",
             },
           };
         }
         return { ...n };
       })
     );
-    // generate
-    setPrompt("");
+
+    const sugar = await inference(ingredients?.text, tokenizer, session);
+
+    setNodes((_nodes) =>
+      _nodes?.map((n) => {
+        if (n?.id === "2") {
+          return {
+            ...n,
+            data: {
+              ...n?.data,
+              children: "...",
+            },
+          };
+        } else if (n?.id === "3") {
+          return {
+            ...n,
+            data: {
+              ...n?.data,
+              children: sugar,
+            },
+          };
+        } else if (n?.id === "4") {
+          return {
+            ...n,
+            data: {
+              ...n?.data,
+              children: sugar > 10 ? "Bad" : "Good",
+            },
+          };
+        }
+        return { ...n };
+      })
+    );
   };
 
   return (

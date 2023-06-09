@@ -1,11 +1,15 @@
 import TableOfContent from "@/components/core/tableofcontent";
 import Demo from "@/components/spec/demo";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
 export default function Language() {
   return (
     <main>
+      <Head>
+        <title>ingbetic - learn</title>
+      </Head>
       <div className="layout">
         <div className="flex mb-5 md:mb-0 text-center flex-col px-5 items-center justify-center w-full min-h-[16rem]">
           <h2>Learn how to</h2>
@@ -15,7 +19,7 @@ export default function Language() {
               build this application
             </span>
           </p>
-          <h4 className="mt-8 lg:w-[50vw]">
+          <h4 className="mt-8 lg:w-[50vw] 2xl:w-full">
             Detail step-by-step guildline for anyone wanted to build LLM
             applications without paying anything. Harness the power of open
             source applications.

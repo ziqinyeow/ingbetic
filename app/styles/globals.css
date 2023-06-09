@@ -113,3 +113,13 @@
 .gradient {
   @apply text-transparent bg-gradient-to-r bg-clip-text;
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spinner {
+  animation: spin 1.5s linear infinite;
+}
