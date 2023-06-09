@@ -10,7 +10,9 @@
 
 <br/>
 
-The entire frontend app is developed using [Next.js](https://nextjs.org/) 12 and [Typescript](https://www.typescriptlang.org/), not using Next.js 13.4 due to the `@xenova/transformers` dependency called `sharp` couldn't resolved in Next.js 13.4 (ended up migrating from `app router` -> `pages router`).
+The entire frontend app is developed using **[Next.js 12](https://nextjs.org/blog/next-12)** and **[Typescript](https://www.typescriptlang.org/)**, not using **[Next.js 13.4](https://nextjs.org/blog/next-13-4)** due to the `@xenova/transformers` dependency called `sharp` couldn't resolved in Next.js 13.4 (ended up migrating from `app router` -> `pages router`).
+
+Styling based on **[shadcnui.com](https://ui.shadcn.com/)** and **[Tailwind](https://tailwindcss.com/)**.
 
 The model trained using **HuggingFace Trainer API** is being exported to `onnx` using `torch.onnx.export` which expects `input_ids` and `attention_mask` as inputs and outputs a regression value called `logits`. The `onnx` model then get further quantize into `int8` precision using `quantize_dynamic("", "", weight_type=QuantType.QUInt8)`.
 
