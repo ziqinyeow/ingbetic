@@ -1,6 +1,6 @@
-# 🥪 Ingredient Text to Sugar Level Estimation
+# 🥪 Recipe URL to Sugar Level Estimation
 
-## App
+## [App](https://ingbetic.vercel.app/)
 
 <br/>
 
