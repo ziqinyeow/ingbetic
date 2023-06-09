@@ -10,4 +10,8 @@ Still in rapid development
 
 ## App
 
+<div align="center">
+    <img src="./asset/demo.gif">
+</div>
+
 See [app/README.md](./app/) for more details.
