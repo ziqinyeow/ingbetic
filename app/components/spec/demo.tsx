@@ -214,7 +214,12 @@ export default function Demo() {
           </form>
         </div>
       </div>
-      <div className="h-56 mt-10 layout">
+      <div
+        className={clsx([
+          "h-56 mt-10 layout",
+          (!session || !tokenizer) && "opacity-30",
+        ])}
+      >
         <ReactFlow
           nodes={nodes}
           edges={edges}
