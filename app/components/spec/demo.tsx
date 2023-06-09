@@ -90,7 +90,7 @@ export default function Demo() {
     const ingredients = await response.json();
 
     // no ingredients found
-    if (!ingredients.text) {
+    if (!response.ok || !ingredients.text) {
       setNodes((_nodes) =>
         _nodes?.map((n) => {
           if (n?.id === "1") {

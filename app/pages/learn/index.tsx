@@ -61,7 +61,7 @@ export default function Language() {
             </Link>{" "}
             components.
           </p>
-          <p>fasdofosa</p>
+          <p>To be continued...</p>
         </div>
       </div>
     </main>
